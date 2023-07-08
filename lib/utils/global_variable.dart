@@ -5,7 +5,8 @@ import 'package:instagram_clone_flutter/screens/event_screen_2.dart';
 import 'package:instagram_clone_flutter/screens/feed_screen.dart';
 import 'package:instagram_clone_flutter/screens/profile_screen.dart';
 import 'package:instagram_clone_flutter/screens/search_screen.dart';
-import '../screens/event_screen.dart';
+import '../screens/create_event_page.dart';
+import '../screens/story_page.dart';
 
 const webScreenSize = 600;
 
