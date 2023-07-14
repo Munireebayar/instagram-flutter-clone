@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:instagram_clone_flutter/resources/auth_methods.dart';
 import 'package:instagram_clone_flutter/resources/firestore_methods.dart';
 import 'package:instagram_clone_flutter/screens/login_screen.dart';
+import 'package:instagram_clone_flutter/screens/photo_screen.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
 import 'package:instagram_clone_flutter/utils/utils.dart';
 import 'package:instagram_clone_flutter/widgets/follow_button.dart';
@@ -73,7 +74,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           )
         : Scaffold(
             appBar: AppBar(
-              backgroundColor: kouyesili,
               title: Text(
                 userData['username'],
               ),
@@ -218,9 +218,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                     return GridView.builder(
                       shrinkWrap: true,
-                      itemCount: (snapshot.data! as dynamic).docs.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      itemCount: (snapshot.data! as QuerySnapshot).docs.length,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 3,
                         crossAxisSpacing: 5,
                         mainAxisSpacing: 1.5,
@@ -228,12 +227,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       itemBuilder: (context, index) {
                         DocumentSnapshot snap =
-                            (snapshot.data! as dynamic).docs[index];
+                            (snapshot.data! as QuerySnapshot).docs[index];
 
-                        return SizedBox(
-                          child: Image(
-                            image: NetworkImage(snap['postUrl']),
-                            fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PhotoScreen(
+                                  imageUrl: snap['postUrl'],
+                                  caption: snap['caption'],
+                                ),
+                              ),
+                            );
+                          },
+                          child: SizedBox(
+                            child: Image(
+                              image: NetworkImage(snap['postUrl']),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         );
                       },

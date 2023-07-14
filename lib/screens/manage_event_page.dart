@@ -11,7 +11,6 @@ class ManageEventsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kouyesili,
         title: const Text('Etkinlikleri Yönet'),
       ),
       body: StreamBuilder<QuerySnapshot>(

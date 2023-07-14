@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
-import 'event_screen_2.dart';
+import 'event_screen.dart';
 
 class CreateEventPage extends StatefulWidget {
   @override
@@ -44,7 +44,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     String saat = _saatController.text;
     String konum = _konumController.text;
 
-    if (title.isNotEmpty && description.isNotEmpty) {
+    if (title.isNotEmpty && description.isNotEmpty && tarih.isNotEmpty && saat.isNotEmpty && konum.isNotEmpty) {
       FirebaseFirestore.instance.collection('events').add({
         'title': title,
         'description': description,
@@ -64,7 +64,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
         // Yeni etkinlik oluşturulduktan sonra etkinlik sayfasına yönlendirme
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => EventPage()),
+          MaterialPageRoute(builder: (context) => const EventPage()),
           (route) => false,
         );
       }).catchError((error) {
@@ -75,7 +75,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-            content: Text('Başlık ve açıklama alanları boş bırakılamaz')),
+            content: Text('Bütün alanlar doldurulmalıdır!')),
       );
     }
   }
@@ -85,7 +85,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(
-        backgroundColor: kouyesili,
         title: const Text('Etkinlik Oluştur'),
       ),
       body: SingleChildScrollView(

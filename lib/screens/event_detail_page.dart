@@ -79,7 +79,6 @@ class _EventDetailPageState extends State<EventDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: kouyesili,
         title: Text('Etkinlik Detayları'),
       ),
       body: SingleChildScrollView(

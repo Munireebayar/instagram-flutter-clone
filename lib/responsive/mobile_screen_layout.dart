@@ -1,7 +1,12 @@
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:instagram_clone_flutter/screens/add_post_screen.dart';
+import 'package:instagram_clone_flutter/screens/event_screen.dart';
+import 'package:instagram_clone_flutter/screens/profile_screen.dart';
+import 'package:instagram_clone_flutter/screens/discover.dart';
 import 'package:instagram_clone_flutter/utils/colors.dart';
-import 'package:instagram_clone_flutter/utils/global_variable.dart';
+
+import '../screens/users.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -10,86 +15,60 @@ class MobileScreenLayout extends StatefulWidget {
   State<MobileScreenLayout> createState() => _MobileScreenLayoutState();
 }
 
-class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  int _page = 0;
-  late PageController pageController; // for tabs animation
-
+class _MobileScreenLayoutState extends State<MobileScreenLayout>
+    with TickerProviderStateMixin {
+  late final TabController _tabController;
   @override
   void initState() {
     super.initState();
-    pageController = PageController();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    pageController.dispose();
-  }
-
-  void onPageChanged(int page) {
-    setState(() {
-      _page = page;
-    });
-  }
-
-  void navigationTapped(int page) {
-    //Animating Page
-    pageController.jumpToPage(page);
+    _tabController = TabController(
+      length: 4,
+      vsync: this,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: PageView(
-        controller: pageController,
-        onPageChanged: onPageChanged,
-        children: homeScreenItems,
-      ),
-      bottomNavigationBar: CupertinoTabBar(
-        backgroundColor: mobileBackgroundColor,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home,
-              color: (_page == 0) ? kouyesili : secondaryColor,
+    return DefaultTabController(
+      length: 4,
+      child: Scaffold(
+          bottomNavigationBar: BottomAppBar(
+            notchMargin: 10,
+            shape: const CircularNotchedRectangle(),
+            child: TabBar(
+              controller: _tabController,
+              indicatorColor: secondaryColor,
+              tabs:const [
+                Tab(
+                  icon: Icon(
+                    Icons.photo_album_outlined,
+                    color: kouyesili,
+                  ),
+                ),
+                Tab(
+                  icon: Icon(Icons.person_search, color: kouyesili),
+                ),
+                Tab(
+                  icon: Icon(Icons.add, color: kouyesili),
+                ),
+                Tab(
+                  icon: Icon(Icons.person, color: kouyesili),
+                ),
+              ],
             ),
-            label: '',
-            backgroundColor: kouyesili,
           ),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.search,
-                color: (_page == 1) ? kouyesili : secondaryColor,
+          body: TabBarView(
+            controller: _tabController,
+            physics: const NeverScrollableScrollPhysics(),
+            children: [
+              const FeedScreen(),
+              const SearchScreen(),
+              const AddPostScreen(),
+              ProfileScreen(
+                uid: FirebaseAuth.instance.currentUser!.uid,
               ),
-              label: '',
-              backgroundColor: kouyesili),
-          BottomNavigationBarItem(
-              icon: Icon(
-                Icons.add_circle,
-                color: (_page == 2) ? kouyesili : secondaryColor,
-              ),
-              label: '',
-              backgroundColor: kouyesili),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.favorite,
-              color: (_page == 3) ? kouyesili : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: kouyesili,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person,
-              color: (_page == 4) ? kouyesili : secondaryColor,
-            ),
-            label: '',
-            backgroundColor: kouyesili,
-          ),
-        ],
-        onTap: navigationTapped,
-        currentIndex: _page,
-      ),
+            ],
+          )),
     );
   }
 }

@@ -17,11 +17,11 @@ void main() async {
   if (kIsWeb) {
     await Firebase.initializeApp(
       options: const FirebaseOptions(
-        apiKey: "AIzaSyCZ-xrXqD5D19Snauto-Fx_nLD7PLrBXGM",
-        appId: "1:585119731880:web:eca6e4b3c42a755cee329d",
-        messagingSenderId: "585119731880",
-        projectId: "instagram-clone-4cea4",
-        storageBucket: 'instagram-clone-4cea4.appspot.com'
+        apiKey: "AIzaSyDszAGEyrJw6zLioU0zaFaSVW3iqDMVG1g",
+        appId: "1:613617712461:android:6cb1d528a5ae07fbe00b04",
+        messagingSenderId: "613617712461",
+        projectId: "koumeet-91744",
+        storageBucket: 'koumeet-91744.appspot.com'
       ),
     );
   } else {
@@ -43,6 +43,12 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Instagram Clone',
         theme: ThemeData.light().copyWith(
+          appBarTheme: const AppBarTheme(
+            color: mobileBackgroundColor,
+            iconTheme: IconThemeData(
+              color: kouyesili
+            )
+          ),
           scaffoldBackgroundColor: mobileBackgroundColor,
         ),
         home: StreamBuilder(

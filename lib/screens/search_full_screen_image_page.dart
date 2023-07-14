@@ -1,6 +1,9 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+
 class FullScreenImageSlider extends StatefulWidget {
   final List<String> imageUrls;
   final int initialIndex;
